@@ -2,10 +2,11 @@ using UnityEngine;
 
 public class TeleportTunic : MonoBehaviour
 {
-    public Sprite skin; // Le skin sÈlectionnÈ
-    public Transform target; // La cible de tÈlÈportation
+    public Sprite skin; // Le skin s√©lectionn√©
+    public Transform target; // La cible de t√©l√©portation
     public float cooldown = 1f; // Temps de recharge en secondes
-    private bool canTeleport = true; // Variable qui indique si la tÈlÈportation est possible ou non
+    public float maxSpeed = 10f; // Vitesse maximale autoris√©e pour la t√©l√©portation
+    private bool canTeleport = true; // Variable qui indique si la t√©l√©portation est possible ou non
     private SpriteRenderer spriteRenderer;
 
     private void Start()
@@ -17,17 +18,17 @@ public class TeleportTunic : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
-            if (canTeleport && skin != null && spriteRenderer.sprite == skin)
+            if (canTeleport && skin != null && spriteRenderer.sprite == skin && GetComponent<Rigidbody2D>().velocity.magnitude <= maxSpeed)
             {
                 transform.position = target.position;
-                canTeleport = false; // DÈsactiver la tÈlÈportation
-                Invoke("ActivateTeleport", cooldown); // Activer la tÈlÈportation aprËs le temps de recharge
+                canTeleport = false; // D√©sactiver la t√©l√©portation
+                Invoke("ActivateTeleport", cooldown); // Activer la t√©l√©portation apr√®s le temps de recharge
             }
         }
     }
 
     private void ActivateTeleport()
     {
-        canTeleport = true; // RÈactiver la tÈlÈportation
+        canTeleport = true; // R√©activer la t√©l√©portation
     }
 }
